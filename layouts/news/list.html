@@ -1,0 +1,25 @@
+{{ define "main"}}
+  {{- partial "page-header.html" . }}
+  <div id="list-page">
+    {{ partial "content-header.html" . }}
+
+
+    {{ with .OutputFormats.Get "rss" -}}
+    <a href="{{ .Permalink}}">(RSS Feed)</a>
+    {{ end -}}
+
+    <main class="content-list" itemscope itemtype="https://schema.org/CollectionPage">
+      {{- template "_internal/schema.html" . -}}
+      {{- $listPageDateFormat := .Site.Params.listPageDateFormat | default "January, 2006" -}}
+      {{- range $index, $value := .Pages.GroupByDate $listPageDateFormat -}}
+        {{- if (ne $index 0) -}}
+        <hr class="separator">
+        {{- end -}}
+        {{- range .Pages -}}
+          {{ partial "page-summary.html" . }}
+        {{- end -}}
+      {{- end -}}
+    </main>
+  </div>
+  {{ partial "footer.html" . }}
+{{ end }}

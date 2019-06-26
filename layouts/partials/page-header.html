@@ -1,0 +1,51 @@
+  <header id="page-header">
+
+    <div class="header-branding">
+      {{- $headerLogoVisible := "" -}}
+      {{- if (ne .Name .Site.Title) -}}
+        {{- $headerLogoVisible = "visible" -}}
+      {{ end }}
+      <a href="{{ $.Site.BaseURL }}" id="header-logo" class="header-logo {{ $headerLogoVisible }}" alt="{{ $.Site.Params.ShortTitle }} home">
+        {{ $.Site.Params.shortTitle }}
+      </a>
+    </div>
+
+    <nav class="header-nav" aria-label="Main menu">
+      <ul id="header-links" class="header-links visible">
+        {{- range .Site.Menus.main }}
+        <li aria-label="{{ .Name }}">
+          <a href="{{ .URL }}" alt="{{ .Name }}" role="menuitem">
+            {{ .Name }}
+          </a>
+        </li>
+        {{- end }}
+      </ul>
+      <div id="hamburger-toggle" class="hamburger" role="button" aria-label="Open site menu">
+        <div class="toggle-bar"></div>
+      </div>
+    </nav>
+
+  </header>
+
+  {{/*  Site overlay menu. Toggled by the hamburger button. */}}
+  <div class="site-menu ">
+    <div class="site-menu-body">
+      <nav class="site-nav" aria-label="Site menu">
+        <ul>
+          {{- range .Site.Menus.main }}
+          <li aria-label="{{ .Name }}">
+            <a href="{{ .URL }}" alt="{{ .Name }}" role="menuitem">
+              {{ .Name }}
+            </a>
+          </li>
+          {{- end }}
+        </ul>
+      </nav>
+
+      <p class="site-menu-tagline">
+        {{ .Site.Params.Tagline | safeHTML }}
+      </p>
+    </div>
+  </div>
+
+  <div class="header-content-division"></div>

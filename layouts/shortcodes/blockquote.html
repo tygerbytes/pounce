@@ -1,0 +1,19 @@
+<!--{{/*
+Create block and pull quotations with citations and citation links.
+
+Basic usage:
+{{< blockquote cite="tygertec" citelink="https://www.tygertec.com/run-better-code/" >}}
+  <p>Programming is hard. It is one of the most complex endeavors ever undertaken by man. But that’s why caffeine was invented… Right? Wrong.</p>
+{{< /blockquote >}}
+*/}}-->
+{{- $classes := .Get "class" -}}
+<blockquote class="fancy-quote {{$classes}}" {{ with .Get "citelink" }}cite="{{ . }}"{{ end }}>
+  {{ .Inner | markdownify }}
+  <footer class="fancy-quote-citation">
+    {{- with .Get "citelink" -}}
+      <cite>&mdash;<a target="_blank" href="{{ . }}">{{ $.Get "cite" }}</a></cite>
+    {{- else -}}
+      <cite>&mdash;{{ .Get "cite" }}</cite>
+    {{- end -}}
+  </footer>
+</blockquote>

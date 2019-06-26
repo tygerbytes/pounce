@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  {{- partial "head.html" . -}}
+  <body>
+    {{- partial "page-header.html" . }}
+    <main id="landing">
+      <header class="landing-branding">
+        <div class="landing-logo">
+          <img class="landing-logo-mask" src="/img/{{ .Site.Params.Logo }}" alt="{{ .Site.Params.ShortTitle }}">
+          <img src="/img/logo-border.svg" alt="logo-border">
+        </div>
+        <h1 class="landing-title">{{ .Site.Params.ShortTitle }}</h1>
+      </header>
+      <p class="landing-description">
+        {{ .Site.Params.description | safeHTML }}
+      </p>
+      {{- partial "social-links" (dict "context" . "showNames" "false" "includeContact" "true" ) -}}
+      <p class="landing-tagline">{{ .Site.Params.Tagline | safeHTML }}</p>
+    </main>
+    {{- partial "footer.html" . -}}
+  </body>
+</html>

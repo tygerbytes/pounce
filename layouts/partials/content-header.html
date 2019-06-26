@@ -1,0 +1,6 @@
+<header class="content-header">
+  <h1 itemprop="headline">{{ .Title }}</h1>
+  {{ if .Description }}
+    <summary itemprop="description">{{ .Description | safeHTML }}</summary>
+  {{ end }}
+</header>

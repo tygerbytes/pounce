@@ -1,0 +1,64 @@
+<footer id="page-footer">
+  <nav class="footer-nav">
+    <section class="footer-col footer-branding">
+      <h1><a href="/">{{ .Site.Params.shortTitle }}</a></h1>
+      <div class="footer-tagline">{{ .Site.Params.Tagline | safeHTML }}</div>
+    </section>
+
+    <section class="footer-col footer-contact">
+      <h2>Contact</h2>
+      <p>
+        <a href="tel:{{ .Site.Params.phone }}">{{ .Site.Params.contactPhone }}</a>
+        <br>
+        <a href="mailto:{{ .Site.Params.contactEmail }}">{{ .Site.Params.contactEmail }}</a>
+      </p>
+      <p>
+          {{ .Site.Params.contactAddress | safeHTML }}
+      </p>
+    </section>
+
+    <section class="footer-col footer-follow">
+      <h2>Follow</h2>
+      {{- partial "social-links" (dict "context" . "showNames" "true" ) -}}
+    </section>
+
+    <section class="footer-col footer-explore">
+      <h2>Explore</h2>
+      <ul>
+        {{- range .Site.Menus.main }}
+        <li aria-label="{{ .Name }}">
+          <a href="{{ .URL }}" alt="{{ .Name }}" role="menuitem">
+            <span class="footer-nav-icon">{{ .Pre | safeHTML }}</span>
+            {{ .Name }}
+          </a>
+        </li>
+        {{- end }}
+      </ul>
+    </section>
+
+    <section class="footer-col footer-legal">
+      <h2>Legal</h2>
+      <ul>
+        <li><a href="/privacy-policy/">Privacy policy</a></li>
+        <li><a href="/about/credits">Design credits</a></li>
+      </ul>
+    </section>
+
+    <section class="footer-col footer-back-to-top">
+      <a href="#" class="footer-button" aria-label="Back to top">
+        <i class="fas fa-arrow-up fa-lg"></i> Back to top
+      </a>
+    </section>
+  </nav>
+  <p class="footer-copyright">
+    <small>
+        &copy; {{ .Site.Params.copyrightYear }} {{ .Site.Params.Author }}. All Rights Reserved.
+    </small>
+  </p>
+</footer>
+{{- $jsMain := resources.Get "js/main.js" }}
+{{- $js := slice $jsMain | resources.Concat "bundle.js" | resources.Minify | resources.Fingerprint }}
+<script src="{{ $js.Permalink }}"></script>
+{{- range .Site.Params.custom_js -}}
+<script src="{{ . }}"></script>
+{{ end }}

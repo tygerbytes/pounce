@@ -1,0 +1,18 @@
+<nav class="social-links">
+  <ul>
+    {{- $items := .context.Site.Menus.social -}}
+    {{- if eq $.includeContact "true" -}}
+      {{- $items = union $items .context.Site.Menus.contact -}}
+    {{- end -}}
+    {{- range $items }}
+    <li>
+      <a href="{{ .URL | safeURL }}" aria-label="{{ .Identifier }}">
+        <span class="contact-link-icon">{{ .Pre }}</span>
+        {{- if ne $.showNames "false" -}}
+          {{ .Name }}
+        {{- end -}}
+      </a>
+    </li>
+    {{- end -}}
+  </ul>
+</nav>

@@ -1,0 +1,15 @@
+{{ define "main"}}
+  <div class="full-screen-page http-404">
+    {{ partial "page-header.html" . }}
+    <main>
+      <h1 id="title">404!</h1>
+      <h2>We're sad you're lost.</h2>
+      <div class="http-404-directions">
+        <a class="lost" href="{{ "/" | relURL }}">
+          <i class='fa fa-directions fa-lg'></i>
+        </a>
+      </div>
+    </main>
+  </div>
+  {{ partial "footer.html" . }}
+{{ end }}

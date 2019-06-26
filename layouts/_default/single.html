@@ -1,0 +1,24 @@
+{{ define "main" }}
+  {{- partial "page-header.html" . -}}
+  {{- $articleSchema := "BlogPosting" -}}
+  {{- if .Params.schema -}}
+    {{- $articleSchema = .Params.schema -}}
+  {{- end -}}
+  {{- $articleClass := "" -}}
+  {{- if eq $articleSchema "BlogPosting" -}}
+    {{- $articleClass = "news-article" -}}
+  {{- end -}}
+  <article id="article" itemscope itemtype="https://schema.org/{{ $articleSchema }}">
+    {{- template "_internal/schema.html" . }}
+
+    {{ partial "content-header.html" . }}
+    <div id="content-body" class="{{ $articleClass }}" itemprop="articleBody">
+      {{ .Content }}
+      {{- if .Date -}}
+        {{ $singlePageDateFormat := .Site.Params.singlePageDateFormat | default "January 2, 2006"}}
+        <p class="date"><em>Last updated {{ .Date.Format $singlePageDateFormat }}</em></p>
+        {{- end -}}
+    </div>
+  </article>
+  {{ partial "footer.html" . }}
+{{ end }}
