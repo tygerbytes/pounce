@@ -1,6 +1,5 @@
 
-
-$theme_background: fefefe;
+$theme_background: #fefefe;
 $theme_white: #fdfdfd;
 $theme_divider: #c9c9c9;
 
@@ -554,8 +553,8 @@ a {
 			position: relative;
 			display: block;
 			height: 0;
-			line-height: .5em ***REMOVED***;
-			content: "“";
+			line-height: .5em;
+			content: "Ã¢ÂÂ";
 			top: -50px;
 			font: italic 400%/1 Cochin,Georgia,times new roman,serif;
 			color: $theme_text_muted;
