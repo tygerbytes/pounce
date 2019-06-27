@@ -1,17 +1,11 @@
 
-<!-- css -->
-  {{- $base := resources.Get "css/base.css" }}
-  {{- $landing := resources.Get "css/landing.css" }}
-  {{- $article := resources.Get "css/article.css" }}
-  {{- $listpage := resources.Get "css/listpage.css" }}
-  {{- $menu := resources.Get "css/menu.css" }}
-  {{- $footer := resources.Get "css/footer.css" }}
-  {{- $fullscreen := resources.Get "css/full-screen.css" }}
-  {{- $css := slice $base $menu $landing $article $listpage $footer $fullscreen | resources.Concat "styles.css" | resources.Minify | resources.Fingerprint }}
-  <link rel="stylesheet" href="{{ $css.Permalink }}" {{ printf "integrity=%q" $css.Data.Integrity | safeHTMLAttr }}>
+  <!-- style -->
+  {{- $scss_options := (dict "targetPath" "pounce.css" "outputStyle" "compressed" "enableSourceMap" true ) -}}
+  {{- $styles := resources.Get "scss/all.scss" | resources.ToCSS $scss_options | resources.Fingerprint -}}
+  <link rel="stylesheet" href="{{ $styles.Permalink }}" {{ printf "integrity=%q" $styles.Data.Integrity | safeHTMLAttr }}>
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css" integrity="sha256-UzFD2WYH2U1dQpKDjjZK72VtPeWP50NoJjd26rnAdUI=" crossorigin="anonymous">
 
   <!-- custom css -->
-  {{ range .Site.Params.custom_css }}
+  {{- range .Site.Params.custom_css -}}
   <link rel="stylesheet" href="{{ . }}">
-  {{ end }}
+  {{- end -}}
