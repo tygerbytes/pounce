@@ -1,0 +1,5 @@
+{{- if eq (getenv "HUGO_ENV") "development" -}}
+{{ "<!-- No Google Analytics in development -->" | safeHTML }}
+{{- else -}}
+  {{- template "_internal/google_analytics_async.html" . -}}
+{{- end -}}

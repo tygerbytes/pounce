@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html>
-  {{- partial "head.html" . -}}
+{{ define "main" }}
   <body>
     {{- partial "page-header.html" . }}
     <main id="landing">
@@ -19,4 +17,4 @@
     </main>
     {{- partial "footer.html" . -}}
   </body>
-</html>
+{{ end }}

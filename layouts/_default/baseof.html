@@ -1,7 +1,32 @@
 <!DOCTYPE html>
-<html>
-  {{ partial "head.html" . }}
-  <body>
-    {{ block "main" . }}{{ end }}
-  </body>
+<html lang="{{ .Site.LanguageCode }}">
+<head>
+  {{ hugo.Generator }}
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ delimit (slice .Title "|" .Site.Title) " " }}</title>
+  <meta name="author" content="{{ .Site.Params.Author }}" />
+  <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ if .IsPage }}{{ .Summary }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ end }}{{ end }}{{ end }}">
+  <meta name="keywords" content="{{ if .Keywords }}{{ delimit .Keywords ", " }}{{ else if and .IsPage .Params.tags }}{{ delimit .Params.tags ", " }}{{ else }}{{ range $term, $val := .Site.Taxonomies.categories }}{{ lower (humanize $term) }}, {{ end }}{{ end }}">
+
+  {{- partial "head/favicon.html" . -}}
+  {{- partial "head/stylesheets.html" . -}}
+
+  {{/* NOTE: See Hugo's internal templates at
+       https://github.com/gohugoio/hugo/tree/master/tpl/tplimpl/embedded/templates */}}
+  {{- template "_internal/opengraph.html" . -}}
+  {{- template "_internal/google_news.html" . -}}
+  {{- template "_internal/schema.html" . -}}
+
+  {{- partial "head/twitter_cards.html" . -}}
+  {{- partial "head/http-referrer.html" . -}}
+  {{- partial "head/google-analytics.html" . -}}
+
+  {{- partial "head/polyfills.html" . -}}
+</head>
+
+<body>
+  {{ block "main" . }}{{ end }}
+</body>
 </html>
