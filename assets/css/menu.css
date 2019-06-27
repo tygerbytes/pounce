@@ -84,6 +84,8 @@
   cursor: pointer;
   height: calc(var(--hamburger-bar-height) * 5);
   width: calc(var(--hamburger-bar-height) * 7);
+  /* Give it some extra padding to make it easier to press: */
+  padding-bottom: 30px;
   z-index: 3;
 }
 .hamburger:hover > .toggle-bar,
