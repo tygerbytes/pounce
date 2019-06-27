@@ -7,11 +7,14 @@
 
     <section class="footer-col footer-contact">
       <h2>Contact</h2>
-      <p>
-        <a href="tel:{{ .Site.Params.phone }}">{{ .Site.Params.contactPhone }}</a>
-        <br>
-        <a href="mailto:{{ .Site.Params.contactEmail }}">{{ .Site.Params.contactEmail }}</a>
-      </p>
+      <ul>
+        <li>
+          <a href="tel:{{ .Site.Params.phone }}">{{ .Site.Params.contactPhone }}</a>
+        </li>
+        <li>
+          <a href="mailto:{{ .Site.Params.contactEmail }}">{{ .Site.Params.contactEmail }}</a>
+        </li>
+      </ul>
       <p>
           {{ .Site.Params.contactAddress | safeHTML }}
       </p>
