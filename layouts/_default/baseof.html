@@ -7,8 +7,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ delimit (slice .Title "|" .Site.Title) " " }}</title>
   <meta name="author" content="{{ .Site.Params.Author }}" />
-  <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ if .IsPage }}{{ .Summary }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ end }}{{ end }}{{ end }}">
-  <meta name="keywords" content="{{ if .Keywords }}{{ delimit .Keywords ", " }}{{ else if and .IsPage .Params.tags }}{{ delimit .Params.tags ", " }}{{ else }}{{ range $term, $val := .Site.Taxonomies.categories }}{{ lower (humanize $term) }}, {{ end }}{{ end }}">
 
   {{- partial "head/favicon.html" . -}}
   {{- partial "head/stylesheets.html" . -}}

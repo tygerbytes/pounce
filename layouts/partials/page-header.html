@@ -5,22 +5,22 @@
       {{- if (ne .Name .Site.Title) -}}
         {{- $headerLogoVisible = "visible" -}}
       {{ end }}
-      <a href="{{ $.Site.BaseURL }}" id="header-logo" class="header-logo {{ $headerLogoVisible }}" alt="{{ $.Site.Params.ShortTitle }} home">
+      <a href="{{ $.Site.BaseURL }}" id="header-logo" class="header-logo {{ $headerLogoVisible }}" title="{{ $.Site.Params.ShortTitle }} home">
         {{ $.Site.Params.shortTitle }}
       </a>
     </div>
 
-    <nav class="header-nav" aria-label="Main menu">
+    <nav class="header-nav">
       <ul id="header-links" class="header-links visible">
         {{- range .Site.Menus.main }}
-        <li aria-label="{{ .Name }}">
-          <a href="{{ .URL }}" alt="{{ .Name }}" role="menuitem">
+        <li>
+          <a href="{{ .URL }}" title="{{ .Name }}">
             {{ .Name }}
           </a>
         </li>
         {{- end }}
       </ul>
-      <div id="hamburger-toggle" class="hamburger" role="button" aria-label="Open site menu">
+      <div id="hamburger-toggle" class="hamburger" role="button" aria-label="Toggle site menu">
         <div class="toggle-bar"></div>
       </div>
     </nav>
@@ -30,11 +30,11 @@
   {{/*  Site overlay menu. Toggled by the hamburger button. */}}
   <div class="site-menu ">
     <div class="site-menu-body">
-      <nav class="site-nav" aria-label="Site menu">
-        <ul>
+      <nav class="site-nav">
+        <ul role="menu">
           {{- range .Site.Menus.main }}
-          <li aria-label="{{ .Name }}">
-            <a href="{{ .URL }}" alt="{{ .Name }}" role="menuitem">
+          <li>
+            <a href="{{ .URL }}" title="{{ .Name }}" role="menuitem">
               {{ .Name }}
             </a>
           </li>

@@ -1,5 +1,4 @@
 {{ define "main" }}
-  <body>
     {{- partial "page-header.html" . }}
     <main id="landing">
       <header class="landing-branding">
@@ -16,5 +15,4 @@
       <p class="landing-tagline">{{ .Site.Params.Tagline | safeHTML }}</p>
     </main>
     {{- partial "footer.html" . -}}
-  </body>
 {{ end }}
