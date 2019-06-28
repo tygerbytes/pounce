@@ -12,8 +12,148 @@ $theme_text_secondary: #4e4e4e;
 $theme_text-washed-out: #ddd;
 $theme_text_muted: #999;
 
-$font_family: -apple-system,BlinkMacSystemFont,segoe ui,Helvetica,Arial,sans-serif,apple color emoji,segoe ui emoji,segoe ui symbol;
+$font_family: -apple-system,BlinkMacSystemFont,"segoe ui",Helvetica,Arial,sans-serif,"apple color emoji","segoe ui emoji","segoe ui symbol";
 $hamburger-bar-height: 0.38rem;
+
+@mixin display-flex {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+}
+
+@mixin flex-direction($value: row) {
+	@if $value == row-reverse {
+	  -webkit-box-direction: reverse;
+	  -webkit-box-orient: horizontal;
+	  -moz-box-direction: reverse;
+	  -moz-box-orient: horizontal;
+	} @else if $value == column {
+	  -webkit-box-direction: normal;
+	  -webkit-box-orient: vertical;
+	  -moz-box-direction: normal;
+	  -moz-box-orient: vertical;
+	} @else if $value == column-reverse {
+	  -webkit-box-direction: reverse;
+	  -webkit-box-orient: vertical;
+	  -moz-box-direction: reverse;
+	  -moz-box-orient: vertical;
+	} @else {
+	  -webkit-box-direction: normal;
+	  -webkit-box-orient: horizontal;
+	  -moz-box-direction: normal;
+	  -moz-box-orient: horizontal;
+	}
+	-webkit-flex-direction: $value;
+	-ms-flex-direction: $value;
+	-direction: $value;
+}
+
+@mixin flex-wrap($value: nowrap) {
+	// No Webkit/FF Box fallback.
+	-webkit-flex-wrap: $value;
+	@if $value == nowrap {
+	  -ms-flex-wrap: none;
+	} @else {
+	  -ms-flex-wrap: $value;
+	}
+	flex-wrap: $value;
+}
+
+@mixin flex-grow($int: 1) {
+	-webkit-box-flex: $int;
+	-moz-box-flex: $int;
+	-webkit-flex-grow: $int;
+	-ms-flex: $int;
+	flex-grow: $int;
+}
+
+@mixin flex-shrink($int: 0) {
+	-webkit-flex-shrink: $int;
+	-moz-flex-shrink: $int;
+	-ms-flex: $int;
+	flex-shrink: $int;
+}
+
+@mixin flex-basis($value: auto) {
+	-webkit-flex-basis: $value;
+	flex-basis: $value;
+}
+
+@mixin flex($fg: 1, $fs: 0, $fb: auto) {
+	// Set a variable to be used by box-flex properties
+	$fg-boxflex: $fg;
+
+	// Box-Flex only supports a flex-grow value so lets grab the
+	// first item in the list and just return that.
+	@if type-of($fg) == 'list' {
+	  $fg-boxflex: nth($fg, 1);
+	}
+
+	-webkit-box: $fg-boxflex;
+	-moz-box: $fg-boxflex;
+	-webkit-flex: $fg $fs $fb;
+	-ms-flex: $fg $fs $fb;
+	flex: $fg $fs $fb;
+}
+
+@mixin justify-content($value: flex-start) {
+	@if $value == flex-start {
+	  -webkit-box-pack: start;
+	  -moz-box-pack: start;
+	  -ms-flex-pack: start;
+	} @else if $value == flex-end {
+	  -webkit-box-pack: end;
+	  -moz-box-pack: end;
+	  -ms-flex-pack: end;
+	} @else if $value == space-between {
+	  -webkit-box-pack: justify;
+	  -moz-box-pack: justify;
+	  -ms-flex-pack: justify;
+	} @else if $value == space-around {
+	  -ms-flex-pack: distribute;
+	} @else {
+	  -webkit-box-pack: $value;
+	  -moz-box-pack: $value;
+	  -ms-flex-pack: $value;
+	}
+	-webkit-justify-content: $value;
+	justify-content: $value;
+}
+
+@mixin align-items($value: stretch) {
+	@if $value == flex-start {
+	  -webkit-box-align: start;
+	  -moz-box-align: start;
+	  -ms-flex-align: start;
+	} @else if $value == flex-end {
+	  -webkit-box-align: end;
+	  -moz-box-align: end;
+	  -ms-flex-align: end;
+	} @else {
+	  -webkit-box-align: $value;
+	  -moz-box-align: $value;
+	  -ms-flex-align: $value;
+	}
+	-webkit-align-items: $value;
+	align-items: $value;
+}
+
+@mixin align-self($value: auto) {
+	// No Webkit Box Fallback.
+	-webkit-align-self: $value;
+	@if $value == flex-start {
+	  -ms-flex-item-align: start;
+	} @else if $value == flex-end {
+	  -ms-flex-item-align: end;
+	} @else {
+	  -ms-flex-item-align: $value;
+	}
+	align-self: $value;
+}
+
+// -------------------
 
 html {
 	height: 100%;
@@ -21,9 +161,9 @@ html {
 
 body {
 	height: 100%;
-	display: flex;
-	flex-direction: column;
-	align-items: stretch;
+	@include display-flex;
+	@include flex-direction(column);
+	@include align-items(stretch);
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
@@ -55,9 +195,9 @@ a {
 }
 
 #page-header {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: nowrap;
+	@include display-flex;
+	@include flex-direction(row);
+	@include flex-wrap(nowrap);
 	position: fixed;
 	margin: 0;
 	padding: 0;
@@ -69,14 +209,14 @@ a {
   }
 
 	.header-branding {
-		display: flex;
-		flex-shrink: 0;
-		flex-grow: 1;
+		@include display-flex;
+		@include flex-shrink(0);
+		@include flex-grow(1);
+		@include justify-content(left);
+		@include align-items(center);
 		padding: 0;
 		margin: 0;
 		margin-left: 20px;
-		justify-content: left;
-		align-items: center;
 		a {
 			text-transform: uppercase;
 			font-size: 1.75em;
@@ -89,12 +229,12 @@ a {
   }
 
 	nav.header-nav {
-		display: flex;
-		flex-direction: row;
+		@include display-flex;
+		@include flex-direction(row);
 		margin-right: 20px;
 		ul {
-			display: flex;
-			flex-direction: row;
+			@include display-flex;
+			@include flex-direction(row);
 			justify-items: space-between;
 		}
 		ul.header-links {
@@ -104,7 +244,7 @@ a {
 			transition: opacity 1s linear;
 		}
 		li {
-			flex: auto;
+			@include flex($fb: auto);
 			list-style-type: none;
 			margin: 0 1em;
 			a {
@@ -253,10 +393,10 @@ a {
 }
 
 #landing {
-	display: flex;
-	flex-direction: column;
-	flex: auto;
-	align-self: center;
+	@include display-flex;
+	@include flex-direction(column);
+	@include flex($fb: auto);
+	@include align-self(center);
 	max-width: 600px;
 	text-align: center;
 	margin-bottom: 3em;
@@ -306,14 +446,14 @@ a {
 	}
 	nav.social-links {
 		ul {
-			display: flex;
-			justify-content: space-evenly;
-			flex-basis: 250px;
+			@include display-flex;
+			@include justify-content(space-evenly);
+			@include flex-basis(250px);
 			margin: 20px auto;
 			padding: 0;
 			list-style: none;
 			li {
-				flex: 1;
+				@include flex(1);
 			}
 		}
 		a {
@@ -330,11 +470,11 @@ a {
 }
 
 #article {
-	flex: auto;
+	@include flex($fb: auto);
+	@include align-self(center);
 	max-width: 800px;
 	padding: 20px;
 	margin: 40px 0;
-	align-self: center;
 	* {
 		box-sizing: border-box;
 	}
@@ -348,7 +488,7 @@ a {
 		content: "";
 	}
 	article {
-		flex: 1 0 auto;
+		@include flex(1, 0, auto);
 		text-align: left;
 	}
 	a {
@@ -537,7 +677,6 @@ a {
 		font-weight: 600;
 	}
 	li {
-		word-wrap: break-all;
 		>p {
 			margin-top: 16px;
 		}
@@ -554,7 +693,7 @@ a {
 			display: block;
 			height: 0;
 			line-height: .5em;
-			content: "Ã¢ÂÂ";
+			content: '\201C'; // Left double quote
 			top: -50px;
 			font: italic 400%/1 Cochin,Georgia,times new roman,serif;
 			color: $theme_text_muted;
@@ -601,10 +740,10 @@ a {
 }
 
 #list-page {
-	display: flex;
-	flex: auto;
-	flex-direction: column;
-	align-self: center;
+	@include display-flex;
+	@include flex($fb: auto);
+	@include flex-direction(column);
+	@include align-self(center);
 	max-width: 800px;
 	padding: 20px;
 	* {
@@ -616,7 +755,7 @@ a {
 		}
 	}
 	.content-list {
-		display: flex;
+		@include display-flex;
 		margin: 40px 0;
 	}
 	h1 {
@@ -654,9 +793,9 @@ a {
 }
 
 footer#page-footer {
-	display: flex;
-	flex-direction: column;
-	align-items: center;
+	@include display-flex;
+	@include flex-direction(column);
+	@include align-items(center);
 	padding: 12px;
 	font-size: .75em;
 	text-align: left;
@@ -666,8 +805,9 @@ footer#page-footer {
 }
 
 .footer-nav {
-	display: flex;
-	flex-flow: row wrap;
+	@include display-flex;
+	@include flex-direction(row);
+	@include flex-wrap(wrap);
 	width: 100%;
 	max-width: 1280px;
 	margin-top: 3em;
@@ -710,8 +850,8 @@ footer#page-footer {
 .footer-follow {
 	.social-links {
 		ul {
-			display: flex;
-			flex-direction: column;
+			@include display-flex;
+			@include flex-direction(column);
 			padding: 0;
 			padding-left: 7px;
 		}
@@ -748,8 +888,8 @@ h3 {
 }
 
 .footer-branding {
-	display: flex;
-	flex-direction: column;
+	@include display-flex;
+	@include flex-direction(column);
 	width: 100%;
 	a {
 		text-transform: uppercase;
@@ -776,15 +916,15 @@ h3 {
 }
 
 .full-screen-page {
-	flex: auto;
+	@include flex($fb: auto);
 	background-repeat: no-repeat;
 	background-position: top;
 	min-height: 100vh;
 	main {
 		text-align: center;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
+		@include display-flex;
+		@include flex-direction(column);
+		@include align-items(center);
 		justify-items: stretch;
 		padding: 20px;
 		color: $theme_primary;
@@ -810,8 +950,8 @@ h3 {
 }
 
 .http-404-directions {
-	display: flex;
-	flex: auto;
+	@include display-flex;
+	@include flex($fb: auto);
 	font-size: 4em;
 	margin: 40px 0;
 	a {
@@ -833,7 +973,7 @@ h3 {
 				min-width: 480px;
 			}
 			ul.header-links {
-				display: flex;
+				@include display-flex;
 			}
 			ul.header-links.visible {
 				visibility: visible;
@@ -862,7 +1002,7 @@ h3 {
 		}
 	}
 	.footer-nav {
-		justify-content: space-around;
+		@include justify-content(space-around);
 	}
 	.footer-branding {
 		flex-basis: 175px;
