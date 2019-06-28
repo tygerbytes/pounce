@@ -53,11 +53,9 @@
       </a>
     </section>
   </nav>
-  <p class="footer-copyright">
-    <small>
-        &copy; {{ .Site.Params.copyrightYear }} {{ .Site.Params.Author }}. All Rights Reserved.
-    </small>
-  </p>
+  <div class="footer-copyright">
+    <small>{{ .Site.Params.Copyright | safeHTML }}</small>
+  </div>
 </footer>
 {{- $jsMain := resources.Get "js/main.js" }}
 {{- $js := slice $jsMain | resources.Concat "bundle.js" | resources.Minify | resources.Fingerprint }}
