@@ -1,61 +1,63 @@
 <footer id="page-footer">
-  <nav class="footer-nav">
-    <section class="footer-col footer-branding">
-      <h1><a href="/">{{ .Site.Params.shortTitle }}</a></h1>
-      <div class="footer-tagline">{{ .Site.Params.Tagline | safeHTML }}</div>
-    </section>
+  <div class="footer-nav-container">
+    <nav class="footer-nav">
+      <section class="footer-col footer-branding">
+        <h1><a href="/">{{ .Site.Params.shortTitle }}</a></h1>
+        <div class="footer-tagline">{{ .Site.Params.Tagline | safeHTML }}</div>
+      </section>
 
-    <section class="footer-col footer-contact">
-      <h2>Contact</h2>
-      <ul>
-        <li>
-          <a href="tel:1-{{ .Site.Params.contactphone }}">{{ .Site.Params.contactPhone }}</a>
-        </li>
-        <li>
-          <a href="mailto:{{ .Site.Params.contactEmail }}">{{ .Site.Params.contactEmail }}</a>
-        </li>
-      </ul>
-      <p>
-          {{ .Site.Params.contactAddress | safeHTML }}
-      </p>
-    </section>
+      <section class="footer-col footer-contact">
+        <h2>Contact</h2>
+        <ul>
+          <li>
+            <a href="tel:1-{{ .Site.Params.contactphone }}">{{ .Site.Params.contactPhone }}</a>
+          </li>
+          <li>
+            <a href="mailto:{{ .Site.Params.contactEmail }}">{{ .Site.Params.contactEmail }}</a>
+          </li>
+        </ul>
+        <p>
+            {{ .Site.Params.contactAddress | safeHTML }}
+        </p>
+      </section>
 
-    <section class="footer-col footer-follow">
-      <h2>Follow</h2>
-      {{- partial "social-links" (dict "context" . "showNames" "true" ) -}}
-    </section>
+      <section class="footer-col footer-follow">
+        <h2>Follow</h2>
+        {{- partial "social-links" (dict "context" . "showNames" "true" ) -}}
+      </section>
 
-    <section class="footer-col footer-explore">
-      <h2>Explore</h2>
-      <ul>
-        {{- range .Site.Menus.main }}
-        <li>
-          <a href="{{ .URL }}" title="{{ .Name }}">
-            <span class="footer-nav-icon">{{ .Pre | safeHTML }}</span>
-            {{ .Name }}
-          </a>
-        </li>
-        {{- end }}
-      </ul>
-    </section>
+      <section class="footer-col footer-explore">
+        <h2>Explore</h2>
+        <ul>
+          {{- range .Site.Menus.main }}
+          <li>
+            <a href="{{ .URL }}" title="{{ .Name }}">
+              <span class="footer-nav-icon">{{ .Pre | safeHTML }}</span>
+              {{ .Name }}
+            </a>
+          </li>
+          {{- end }}
+        </ul>
+      </section>
 
-    <section class="footer-col footer-legal">
-      <h2>Legal</h2>
-      <ul>
-        <li><a href="/privacy-policy/">Privacy policy</a></li>
-        <li><a href="/about/credits">Design credits</a></li>
-      </ul>
-    </section>
+      <section class="footer-col footer-legal">
+        <h2>Legal</h2>
+        <ul>
+          <li><a href="/privacy-policy/">Privacy policy</a></li>
+          <li><a href="/about/credits">Design credits</a></li>
+        </ul>
+      </section>
 
-    <section class="footer-col footer-back-to-top">
-      <a href="#" class="footer-button">
-        <i class="fas fa-arrow-up fa-lg"></i> Back to top
-      </a>
-    </section>
-  </nav>
-  <div class="footer-copyright">
-    <small>{{ .Site.Params.Copyright | safeHTML }}</small>
+      <section class="footer-col footer-back-to-top">
+        <a href="#" class="footer-button">
+          <i class="fas fa-arrow-up fa-lg"></i> Back to top
+        </a>
+      </section>
+    </nav>
   </div>
+  <div class="footer-copyright">
+      <small>{{ .Site.Params.Copyright | safeHTML }}</small>
+    </div>
 </footer>
 {{- $jsMain := resources.Get "js/main.js" }}
 {{- $js := slice $jsMain | resources.Concat "bundle.js" | resources.Minify | resources.Fingerprint }}
