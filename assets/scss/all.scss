@@ -1,5 +1,6 @@
 
 $theme_background: #fefefe;
+$theme_background_transparent: rgba(255, 255, 255, 0.9);
 $theme_white: #fdfdfd;
 $theme_divider: #c9c9c9;
 
@@ -197,13 +198,15 @@ a {
 #page-header {
 	@include display-flex;
 	@include flex-direction(row);
-	@include flex-wrap(nowrap);
+  @include flex-wrap(nowrap);
+  background-color: $theme_background_transparent;
 	position: fixed;
 	margin: 0;
 	padding: 0;
 	padding-top: 10px;
 	width: 100%;
-	z-index: 2;
+  z-index: 2;
+
 	a {
 		text-decoration: none;
   }
@@ -219,7 +222,7 @@ a {
 		margin-left: 20px;
 		a {
 			text-transform: uppercase;
-			font-size: 1.75em;
+			font-size: 2.10rem;
 			font-weight: 700;
 			color: $theme_text_secondary;
 			&:hover {
@@ -724,19 +727,18 @@ a {
 	}
 	img[align=left] {
 		padding-right: 20px;
-	}
-}
-
-#article.news-article {
-	>p {
-		&:first-of-type {
-			&::first-letter {
-				float: left;
-				padding-right: 10px;
-				font-size: 4em;
-			}
-		}
-	}
+  }
+  .news-article {
+    >p {
+      &:first-of-type {
+        &::first-letter {
+          float: left;
+          padding-right: 10px;
+          font-size: 4em;
+        }
+      }
+    }
+  }
 }
 
 #list-page {
