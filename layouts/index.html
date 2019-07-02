@@ -9,7 +9,7 @@
         <h1 class="landing-title">{{ .Site.Params.ShortTitle }}</h1>
       </header>
       <p class="landing-description">
-        {{ .Site.Params.description | safeHTML }}
+        {{ (.Site.Params.descriptionHTML | default .Site.Params.description) | safeHTML }}
       </p>
       {{- partial "social-links" (dict "context" . "showNames" "false" "includeContact" "true" ) -}}
       <p class="landing-tagline">{{ .Site.Params.Tagline | safeHTML }}</p>
