@@ -62,6 +62,6 @@
 {{- $jsMain := resources.Get "js/main.js" }}
 {{- $js := slice $jsMain | resources.Concat "bundle.js" | resources.Minify | resources.Fingerprint }}
 <script src="{{ $js.Permalink }}"></script>
-{{- range .Site.Params.custom_js -}}
+{{ range .Site.Params.custom_js -}}
 <script src="{{ . }}"></script>
 {{ end }}
