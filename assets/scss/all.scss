@@ -425,21 +425,6 @@ a {
 			line-height: 1em;
 			margin: 30px 0;
 		}
-		.landing-logo {
-			position: relative;
-			height: 275px;
-			img {
-				position: absolute;
-				width: 275px;
-				margin: 0 auto;
-				left: 0;
-				right: 0;
-			}
-		}
-		.landing-logo-mask {
-			clip-path: circle(125px at center);
-			-webkit-clip-path: circle(125px at center);
-		}
   }
 
 	.landing-description {
