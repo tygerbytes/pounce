@@ -371,7 +371,7 @@ a {
 }
 
 .header-logo {
-	visibility: hidden;
+  visibility: hidden;
 }
 
 .header-logo.visible {
@@ -419,7 +419,8 @@ a {
   margin-bottom: 3em;
 
 	.landing-branding {
-		h1.landing-title {
+    margin-top: 30px;
+    h1.landing-title {
 			font-size: 3em;
 			line-height: 1em;
 			margin: 30px 0;
@@ -470,7 +471,7 @@ a {
 			@include display-flex;
 			@include justify-content(space-evenly);
 			@include flex-basis(250px);
-			margin: 20px auto;
+			margin: 15px auto;
 			padding: 0;
       list-style: none;
 

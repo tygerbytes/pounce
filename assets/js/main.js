@@ -7,7 +7,7 @@
     }
     func.throttled = true;
     func(params);
-    window.setTimeout(() => func.throttled = false, 300);
+    window.setTimeout(() => func.throttled = false, 100);
   }
 
   var header = {
