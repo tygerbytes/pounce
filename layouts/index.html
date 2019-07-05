@@ -10,7 +10,7 @@
       <p class="landing-description">
         {{ (.Site.Params.descriptionHTML | default .Site.Params.description) | safeHTML }}
       </p>
-      {{- partial "social-links" (dict "context" . "showNames" "false" "includeContact" "true" ) -}}
+      {{- partial "social-links" (dict "context" . "showNames" false "includeContact" true ) -}}
       <p class="landing-tagline">{{ .Site.Params.Tagline | safeHTML }}</p>
     </main>
     {{- partial "footer.html" . -}}

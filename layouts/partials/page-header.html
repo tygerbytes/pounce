@@ -1,11 +1,7 @@
   <header id="page-header" class="sticky">
 
     <div class="header-branding">
-      {{- $headerLogoVisible := "" -}}
-      {{- if (ne .Name .Site.Title) -}}
-        {{- $headerLogoVisible = "visible" -}}
-      {{ end }}
-      <a href="{{ $.Site.BaseURL }}" id="header-logo" class="header-logo {{ $headerLogoVisible }}" title="{{ $.Site.Params.ShortTitle }} home">
+      <a href="{{ $.Site.BaseURL }}" id="header-logo" class="header-logo" title="{{ $.Site.Params.ShortTitle }} home">
         {{ $.Site.Params.shortTitle }}
       </a>
     </div>
@@ -28,7 +24,7 @@
   </header>
 
   {{/*  Site overlay menu. Toggled by the hamburger button. */}}
-  <div class="site-menu ">
+  <div id="site-menu" class="">
     <div class="site-menu-body">
       <nav class="site-nav">
         <ul role="menu">
@@ -40,6 +36,7 @@
           </li>
           {{- end }}
         </ul>
+        {{ partial "social-links" (dict "context" . "showNames" true "includeContact" true "textLeft" true ) }}
       </nav>
 
       <p class="site-menu-tagline">

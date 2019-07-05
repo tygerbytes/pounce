@@ -18,7 +18,6 @@
 
     toggleVisibility: function() {
       header.links.classList.toggle('visible');
-      header.logo.classList.toggle('visible-override');
       this.me.classList.toggle('hamburger-mode');
     },
 
@@ -36,7 +35,7 @@
 
   var hamburger = {
     toggleButton: document.getElementById('hamburger-toggle'),
-    menu: document.querySelector('.site-menu'),
+    menu: document.getElementById('site-menu'),
     isToggled: false,
 
     toggleMenu:  function(e) {

@@ -1,14 +1,18 @@
 <nav class="social-links">
   <ul>
     {{- $items := .context.Site.Menus.social -}}
-    {{- if eq $.includeContact "true" -}}
+    {{- $textOnLeft := $.textLeft -}}
+    {{- if $.includeContact -}}
       {{- $items = union $items .context.Site.Menus.contact -}}
     {{- end -}}
     {{- range $items }}
     <li>
       <a href="{{ .URL | safeURL }}" aria-label="{{ .Identifier }}">
+        {{- if and $.showNames $textOnLeft -}}
+          {{ .Name }}
+        {{- end -}}
         <span class="contact-link-icon">{{ .Pre }}</span>
-        {{- if ne $.showNames "false" -}}
+        {{- if and $.showNames (not $textOnLeft) -}}
           {{ .Name }}
         {{- end -}}
       </a>
