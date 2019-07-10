@@ -416,6 +416,8 @@ a {
       color: $theme_text_secondary;
       font-size: .8em;
       font-style: italic;
+      // Default to not display, unless min-width/height conditions met
+      display: none;
     }
   }
 }
@@ -935,6 +937,18 @@ a {
     }
     .footer-tagline {
       border-bottom: none;
+    }
+  }
+}
+
+@media
+(min-width: 800px),
+(min-width: 280px) and (min-height: 600px) {
+  #site-menu {
+    .site-menu-body {
+      .site-menu-tagline {
+        display: block;
+      }
     }
   }
 }
