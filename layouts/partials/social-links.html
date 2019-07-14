@@ -7,7 +7,7 @@
     {{- end -}}
     {{- range $items }}
     <li>
-      <a href="{{ .URL | safeURL }}" aria-label="{{ .Identifier }}">
+      <a href="{{ .URL | safeURL }}" aria-label="{{ .Identifier }}" target="_blank" rel="noopener">
         {{- if and $.showNames $textOnLeft -}}
           {{ .Name }}
         {{- end -}}
