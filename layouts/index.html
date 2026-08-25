@@ -35,7 +35,12 @@
       <p class="landing-credential">{{ . | safeHTML }}</p>
       {{- end }}
 
+      {{/*  The icon row is redundant once a call to action is present, but it is
+            still the right hero for a site without one. Compared against false
+            rather than piped through `default`, which treats false as unset. */}}
+      {{- if ne .Site.Params.heroSocialLinks false }}
       {{- partial "social-links" (dict "context" . "showNames" false "includeContact" true ) -}}
+      {{- end }}
       <p class="landing-tagline">{{ .Site.Params.Tagline | safeHTML }}</p>
     </main>
 

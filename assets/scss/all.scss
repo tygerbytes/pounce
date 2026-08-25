@@ -722,7 +722,7 @@ a {
 		font-style: italic;
 		font-size: 1.05em;
 		color: $theme_text_secondary;
-    margin: 0;
+    margin: 1.5em 0 0;
 
     &::before {
       content: '\2014';
@@ -733,7 +733,7 @@ a {
   }
 
 	nav {
-		margin: 20px 0;
+		margin: 20px 0 0;
 		.icon-lg {
 			font-size: 2em;
 		}
