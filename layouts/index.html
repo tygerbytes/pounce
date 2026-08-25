@@ -19,7 +19,33 @@
           <img src="/img/{{ .Site.Params.Logo }}" alt="{{ $alt }}" fetchpriority="high">
           {{- end }}
         </div>
-        <h1 class="landing-title">{{ .Site.Params.ShortTitle }}</h1>
+        {{- /* Setting the pronunciation param is what turns the guide on. */ -}}
+        {{- $pron := .Site.Params.pronunciation -}}
+
+        <div class="landing-title-row">
+          <h1 class="landing-title">{{ .Site.Params.ShortTitle }}</h1>
+          {{- with $pron }}
+          {{/*  Native popover: the browser supplies Escape, click-outside
+                dismissal, top-layer painting and focus handling, so this needs
+                no script. Anything too old to support it hides the control
+                rather than showing a stuck-open card -- see the @supports rule
+                in the stylesheet. */}}
+          <button type="button" class="pronounce-toggle" popovertarget="pronunciation-note"
+                  aria-label="How to pronounce {{ $.Site.Params.ShortTitle }}">
+            {{ partial "icon" "info-circle" }}
+          </button>
+          {{- end }}
+        </div>
+
+        {{- with $pron }}
+        <div id="pronunciation-note" popover class="pronounce-note">
+          <p class="pronounce-word">{{ $.Site.Params.ShortTitle }}</p>
+          <p class="pronounce-respell">{{ .respell }}</p>
+          {{- with .note }}
+          <p class="pronounce-detail">{{ . | safeHTML }}</p>
+          {{- end }}
+        </div>
+        {{- end }}
       </header>
       <p class="landing-description">
         {{ (.Site.Params.descriptionHTML | default .Site.Params.description) | safeHTML }}
