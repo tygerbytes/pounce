@@ -1,22 +1,96 @@
-// Theme variables
-$theme_background: #fefefe;
-$theme_background_transparent: rgba(255, 255, 255, 0.9);
-$theme_white: #fdfdfd;
-$theme_divider: #c9c9c9;
+// Theme palette.
+//
+// The values live in custom properties so the whole palette can be swapped at
+// run time for dark mode; the SCSS variables below are thin aliases, which
+// means every existing `$theme_*` usage in this file keeps working untouched.
+// Do not pass these through Sass colour functions (darken(), rgba($x, ...) and
+// friends) -- they are `var()` references at build time, not colours.
+:root {
+	color-scheme: light;
 
-$theme_primary: #d0eafa;
-$theme_primary_accent: #3879a1;
-$theme_secondary: #fffed1;
-// Footer ground. The yellow above is retained only so existing overrides do not
-// break; nothing in this theme paints with it any more.
-$theme_accent_deep: #2c5f7f;
-$theme_on_accent: #ffffff;
-$theme_on_accent_muted: #d3e3ee;
+	--theme-background: #fefefe;
+	--theme-background-transparent: rgba(255, 255, 255, 0.9);
+	--theme-white: #fdfdfd;
+	--theme-divider: #c9c9c9;
 
-$theme_text_primary: #0e0e0e;
-$theme_text_secondary: #4e4e4e;
-$theme_text-washed-out: #ddd;
-$theme_text_muted: #999;
+	--theme-primary: #d0eafa;
+	--theme-primary-accent: #3879a1;
+	--theme-secondary: #fffed1;
+
+	// Footer ground.
+	--theme-accent-deep: #2c5f7f;
+	--theme-on-accent: #ffffff;
+	--theme-on-accent-muted: #d3e3ee;
+
+	// The call to action needs its own pair. The accent is a background here
+	// rather than a foreground, so it cannot simply lighten in dark mode: a pale
+	// blue button would leave white label text far below contrast.
+	--theme-cta-background: #3879a1;
+	--theme-cta-background-hover: #2c5f7f;
+	--theme-cta-foreground: #ffffff;
+
+	--theme-text-primary: #0e0e0e;
+	--theme-text-secondary: #4e4e4e;
+
+	// Hairline over a coloured ground, where a flat divider colour would band.
+	--theme-rule-subtle: rgba(0, 0, 0, 0.07);
+	--theme-rule-on-accent: rgba(255, 255, 255, 0.25);
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		color-scheme: dark;
+
+		--theme-background: #14181b;
+		--theme-background-transparent: rgba(20, 24, 27, 0.9);
+		--theme-white: #1b2126;
+		--theme-divider: #333c44;
+
+		--theme-primary: #17242e;
+		// Lifted well clear of the accent's light-mode value: the same blue that
+		// reads on white is close to unreadable on a near-black ground.
+		--theme-primary-accent: #79bde3;
+		--theme-secondary: #fffed1;
+
+		--theme-accent-deep: #1d4258;
+		--theme-on-accent: #ffffff;
+		--theme-on-accent-muted: #c2d5e2;
+
+		// Inverted: a light button with dark text, which is the only way to keep
+		// the control legible against a dark page without dimming it.
+		--theme-cta-background: #7cc0e6;
+		--theme-cta-background-hover: #9ed2f0;
+		--theme-cta-foreground: #0b1a24;
+
+		--theme-text-primary: #e9ecee;
+		--theme-text-secondary: #b4bcc2;
+
+		--theme-rule-subtle: rgba(255, 255, 255, 0.09);
+		--theme-rule-on-accent: rgba(255, 255, 255, 0.2);
+	}
+}
+
+$theme_background: var(--theme-background);
+$theme_background_transparent: var(--theme-background-transparent);
+$theme_white: var(--theme-white);
+$theme_divider: var(--theme-divider);
+
+$theme_primary: var(--theme-primary);
+$theme_primary_accent: var(--theme-primary-accent);
+$theme_secondary: var(--theme-secondary);
+$theme_accent_deep: var(--theme-accent-deep);
+$theme_on_accent: var(--theme-on-accent);
+$theme_on_accent_muted: var(--theme-on-accent-muted);
+
+$theme_cta_background: var(--theme-cta-background);
+$theme_cta_background_hover: var(--theme-cta-background-hover);
+$theme_cta_foreground: var(--theme-cta-foreground);
+
+$theme_text_primary: var(--theme-text-primary);
+$theme_text_secondary: var(--theme-text-secondary);
+
+$theme_rule_subtle: var(--theme-rule-subtle);
+$theme_rule_on_accent: var(--theme-rule-on-accent);
 
 $font_family: -apple-system,BlinkMacSystemFont,"segoe ui",Helvetica,Arial,sans-serif,"apple color emoji","segoe ui emoji","segoe ui symbol";
 // Headings carry the brand voice; body copy stays on the system stack so the
@@ -245,7 +319,7 @@ a {
 	display: inline-block;
 	padding: 0.7em 1.7em;
 	border-radius: 4px;
-	background-color: $theme_primary_accent;
+	background-color: $theme_cta_background;
 	font-weight: 600;
 	font-size: 0.95em;
 	text-decoration: none;
@@ -253,12 +327,12 @@ a {
 
 	&:link,
 	&:visited {
-		color: #fff;
+		color: $theme_cta_foreground;
 	}
 	&:hover,
 	&:active {
-		background-color: #2c5f7f;
-		color: #fff;
+		background-color: $theme_cta_background_hover;
+		color: $theme_cta_foreground;
 		text-decoration: none;
 	}
 	&:focus-visible {
@@ -309,7 +383,7 @@ a {
 			padding: 0.42em 0 0.42em 1.4em;
 			position: relative;
 			color: $theme_text_secondary;
-			border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+			border-bottom: 1px solid $theme_rule_subtle;
 
 			&:last-child {
 				border-bottom: 0;
@@ -1019,7 +1093,7 @@ a {
     padding: 1em 0 1em 5px;
     margin-bottom: 3em;
     font-style: italic;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+    border-bottom: 1px solid $theme_rule_on_accent;
   }
 
   .footer-back-to-top {
