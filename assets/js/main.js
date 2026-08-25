@@ -39,16 +39,40 @@
     isToggled: false,
 
     toggleMenu:  function(e) {
-      e.preventDefault();
+      if (e) {
+        e.preventDefault();
+      }
       this.toggleButton.classList.toggle('expanded');
       this.isToggled = (this.toggleButton.classList.contains('expanded'));
+      // The rotated bars convey the state visually; aria-expanded is what says
+      // it to a screen reader.
+      this.toggleButton.setAttribute('aria-expanded', String(this.isToggled));
       this.menu.classList.toggle('visible');
       header.toggleVisibility();
+    },
+
+    closeMenu: function() {
+      if (!this.isToggled) {
+        return;
+      }
+      this.toggleMenu();
+      // The menu just became visibility:hidden. Without this, focus would be
+      // stranded on a link inside it and the next Tab would start from the top
+      // of the document.
+      this.toggleButton.focus();
     }
   };
 
   hamburger.toggleButton.addEventListener('click', function(e) {
     hamburger.toggleMenu(e);
+  });
+
+  // Escape is the expected way out of an overlay menu. Enter and Space need no
+  // handling: the toggle is a real <button>.
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      hamburger.closeMenu();
+    }
   });
 
   function scrollHandler(e) {

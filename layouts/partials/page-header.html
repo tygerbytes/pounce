@@ -16,9 +16,12 @@
         </li>
         {{- end }}
       </ul>
-      <div id="hamburger-toggle" class="hamburger" role="button" aria-label="Toggle site menu">
-        <div class="toggle-bar"></div>
-      </div>
+      {{/*  A real <button> rather than a div[role=button]: it is focusable and
+            responds to Enter/Space without any script of our own. */}}
+      <button type="button" id="hamburger-toggle" class="hamburger"
+              aria-label="Toggle site menu" aria-expanded="false" aria-controls="site-menu">
+        <span class="toggle-bar"></span>
+      </button>
     </nav>
 
   </header>

@@ -293,12 +293,32 @@ a {
 }
 
 .hamburger {
+	// Strip the native <button> chrome: this is a bare icon control, and the
+	// element was a plain div until it needed to be keyboard-operable.
+	appearance: none;
+	-webkit-appearance: none;
+	background: none;
+	border: 0;
+	color: inherit;
+	font: inherit;
+	display: block;
+	// Buttons carry two UA styles a div does not, and both move the bars:
+	// border-box would collapse the height into the padding, and the centred
+	// text alignment shifts the static position the absolute .toggle-bar
+	// resolves against.
+	box-sizing: content-box;
+	text-align: left;
 	user-select: none;
 	cursor: pointer;
 	height: $hamburger-bar-height * 5;
 	width: $hamburger-bar-height * 7;
-	padding-bottom: 30px;
+	padding: 0 0 30px;
 	z-index: 3;
+	// Keyboard users get a focus ring; mouse users do not.
+	&:focus-visible {
+		outline: 2px solid $theme_primary_accent;
+		outline-offset: 6px;
+	}
 	&:hover {
 		>.toggle-bar {
 			background: $theme_primary_accent;
@@ -371,7 +391,11 @@ a {
 	width: 100%;
 	height: 0;
 	overflow: hidden;
-	transition: height 550ms ease;
+	// Height alone leaves the collapsed menu's links in the tab order and
+	// audible to screen readers. visibility removes them; the delay holds it
+	// off until the collapse animation has actually finished.
+	visibility: hidden;
+	transition: height 550ms ease, visibility 0s linear 550ms;
 	background-color: $theme_primary;
 	border-bottom: 1px solid $theme_primary_accent;
   z-index: 1;
@@ -388,6 +412,8 @@ a {
   &.visible {
     height: 100%;
     opacity: 1;
+    visibility: visible;
+    transition: height 550ms ease, visibility 0s linear 0s;
   }
 
   .site-menu-body {
