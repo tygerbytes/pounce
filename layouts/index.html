@@ -24,8 +24,28 @@
       <p class="landing-description">
         {{ (.Site.Params.descriptionHTML | default .Site.Params.description) | safeHTML }}
       </p>
+
+      {{- with .Site.Params.ctaURL }}
+      <p class="landing-cta">
+        <a class="button-primary" href="{{ . | safeURL }}">{{ $.Site.Params.ctaLabel | default "Get in touch" }}</a>
+      </p>
+      {{- end }}
+
+      {{- with .Site.Params.credential }}
+      <p class="landing-credential">{{ . | safeHTML }}</p>
+      {{- end }}
+
       {{- partial "social-links" (dict "context" . "showNames" false "includeContact" true ) -}}
       <p class="landing-tagline">{{ .Site.Params.Tagline | safeHTML }}</p>
     </main>
+
+    {{/*  Home page body copy, from content/_index.md. Absent on sites that do
+          not supply one, in which case the landing page stays a lone hero. */}}
+    {{- with .Content }}
+    <section id="landing-detail">
+      {{ . }}
+    </section>
+    {{- end }}
+
     {{- partial "footer.html" . -}}
 {{ end }}

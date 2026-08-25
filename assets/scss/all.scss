@@ -7,6 +7,11 @@ $theme_divider: #c9c9c9;
 $theme_primary: #d0eafa;
 $theme_primary_accent: #3879a1;
 $theme_secondary: #fffed1;
+// Footer ground. The yellow above is retained only so existing overrides do not
+// break; nothing in this theme paints with it any more.
+$theme_accent_deep: #2c5f7f;
+$theme_on_accent: #ffffff;
+$theme_on_accent_muted: #d3e3ee;
 
 $theme_text_primary: #0e0e0e;
 $theme_text_secondary: #4e4e4e;
@@ -14,6 +19,30 @@ $theme_text-washed-out: #ddd;
 $theme_text_muted: #999;
 
 $font_family: -apple-system,BlinkMacSystemFont,"segoe ui",Helvetica,Arial,sans-serif,"apple color emoji","segoe ui emoji","segoe ui symbol";
+// Headings carry the brand voice; body copy stays on the system stack so the
+// bulk of the text costs nothing to load. See static/fonts/README.md.
+$font_heading: "Source Serif 4", Georgia, "Times New Roman", serif;
+
+// Self-hosted, split by unicode-range: the tiny second file exists only so the
+// U-macron in "Uterpret" does not drag in the whole 18K latin-ext subset.
+@font-face {
+	font-family: "Source Serif 4";
+	font-style: normal;
+	font-weight: 600;
+	font-display: swap;
+	src: url("/fonts/source-serif-4-latin-600.woff2") format("woff2");
+	unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+		U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+		U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+	font-family: "Source Serif 4";
+	font-style: normal;
+	font-weight: 600;
+	font-display: swap;
+	src: url("/fonts/source-serif-4-umacron-600.woff2") format("woff2");
+	unicode-range: U+016A-016B;
+}
 
 $hamburger-bar-height: 0.35rem;
 
@@ -210,6 +239,91 @@ a {
 	font-size: 1.33em;
 }
 
+// Primary call to action. The anchor colour rules further up set every link
+// state to the body colour, so each state is restated here.
+.button-primary {
+	display: inline-block;
+	padding: 0.7em 1.7em;
+	border-radius: 4px;
+	background-color: $theme_primary_accent;
+	font-weight: 600;
+	font-size: 0.95em;
+	text-decoration: none;
+	transition: background-color 150ms ease;
+
+	&:link,
+	&:visited {
+		color: #fff;
+	}
+	&:hover,
+	&:active {
+		background-color: #2c5f7f;
+		color: #fff;
+		text-decoration: none;
+	}
+	&:focus-visible {
+		outline: 2px solid $theme_primary_accent;
+		outline-offset: 3px;
+	}
+}
+
+// The "what I do" copy that the home page renders below the hero.
+#landing-detail {
+	@include align-self(center);
+	box-sizing: border-box;
+	width: 100%;
+	max-width: 640px;
+	padding: 0 20px;
+	margin: 1em 0 3.5em;
+	text-align: left;
+
+	h2 {
+		font-family: $font_heading;
+		font-size: 1.35em;
+		font-weight: 600;
+		line-height: 1.2;
+		margin: 1.6em 0 0.5em;
+		color: $theme_text_primary;
+	}
+
+	p {
+		margin: 0 0 0.8em;
+		color: $theme_text_secondary;
+	}
+
+	ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+
+		li {
+			padding: 0.42em 0 0.42em 1.4em;
+			position: relative;
+			color: $theme_text_secondary;
+			border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+
+			&:last-child {
+				border-bottom: 0;
+			}
+			// A small accent mark rather than a bullet glyph.
+			&::before {
+				content: '';
+				position: absolute;
+				left: 0;
+				top: 1.05em;
+				width: 8px;
+				height: 2px;
+				background-color: $theme_primary_accent;
+			}
+		}
+	}
+
+	strong {
+		color: $theme_text_primary;
+		font-weight: 600;
+	}
+}
+
 .header-content-division {
 	padding-top: 40px;
 }
@@ -254,9 +368,11 @@ a {
     margin-left: 20px;
 
     a {
+			font-family: $font_heading;
 			text-transform: uppercase;
+			letter-spacing: 0.02em;
 			font-size: 2.10rem;
-			font-weight: 700;
+			font-weight: 600;
 			color: $theme_text_secondary;
 			&:hover {
 				color: $theme_primary_accent;
@@ -471,25 +587,57 @@ a {
 	@include flex-direction(column);
 	@include flex($fb: auto);
 	@include align-self(center);
-	max-width: 600px;
+	max-width: 640px;
 	text-align: center;
-  margin-bottom: 3em;
+  margin-bottom: 1.5em;
+  padding: 0 20px;
+  box-sizing: border-box;
 
 	.landing-branding {
-    margin-top: 30px;
+    // .header-content-division only reserves 40px, which is less than the
+    // header is tall on small screens; without this the logo tucks underneath.
+    margin-top: 32px;
+
+    // The logo was rendering at its full 278px, which left the hero mostly
+    // empty above the fold and pushed everything else down.
+    .landing-logo {
+      img {
+        width: 190px;
+        height: auto;
+      }
+    }
+
     h1.landing-title {
+			font-family: $font_heading;
 			font-size: 3em;
+			font-weight: 600;
 			line-height: 1em;
-			margin: 30px 0;
+			margin: 20px 0 12px;
 		}
   }
 
 	.landing-description {
 		margin: 0;
+		font-size: 1.1em;
+		color: $theme_text_secondary;
   }
 
+	// Primary call to action. The site previously offered no way to make contact
+	// beyond a bare mailto: hidden in the row of social icons.
+	.landing-cta {
+		margin: 1.6em 0 0.4em;
+	}
+
+	.landing-credential {
+		margin: 0.9em 0 0;
+		font-size: 0.85em;
+		color: $theme_text_secondary;
+	}
+
 	.landing-tagline {
+		font-family: $font_heading;
 		font-style: italic;
+		font-size: 1.05em;
 		color: $theme_text_secondary;
     margin: 0;
 
@@ -502,9 +650,9 @@ a {
   }
 
 	nav {
-		margin: 30px 0;
+		margin: 20px 0;
 		.icon-lg {
-			font-size: 2.5em;
+			font-size: 2em;
 		}
   }
 
@@ -613,6 +761,7 @@ a {
 	}
 
   h1, h2, h3, h4, h5, h6 {
+		font-family: $font_heading;
 		margin-top: 24px;
 		margin-bottom: 16px;
 		font-weight: 600;
@@ -647,23 +796,18 @@ a {
 		}
   }
 
+	// A pull quote, not a floating card: the old treatment was a 50%-opacity
+	// black glow on all four sides plus an oversized curly quote glyph.
 	blockquote {
-		box-shadow: 0 0 6px rgba(0,0,0,.5);
-		padding: 80px 1em 1.75em;
-		margin: 1.5em 0 0;
+		box-shadow: none;
+		padding: 0 0 0 1.5em;
+		margin: 1.75em 0;
 		color: $theme_text_secondary;
-		background: $theme_white;
-		border-left: 10px solid $theme_text-washed-out;
-		&::before {
-			position: relative;
-			display: block;
-			height: 0;
-			line-height: .5em;
-			content: '\201C'; // Left double quote
-			top: -50px;
-			font: italic 400%/1 Cochin,Georgia,times new roman,serif;
-			color: $theme_text_muted;
-    }
+		background: none;
+		border-left: 3px solid $theme_primary_accent;
+		font-family: $font_heading;
+		font-size: 1.15em;
+		line-height: 1.55;
 
 		p {
 			padding-bottom: 1em;
@@ -764,9 +908,9 @@ a {
   padding: 12px;
   font-size: .75em;
   text-align: left;
-  color: $theme_text_secondary;
-  background-color: $theme_secondary;
-  border-top: 4px solid $theme_divider;
+  color: $theme_on_accent_muted;
+  background-color: $theme_accent_deep;
+  border-top: 0;
 
   .footer-nav {
     @include display-flex;
@@ -778,15 +922,16 @@ a {
     margin-bottom: 3em;
     a {
       text-decoration: none;
-      color: $theme_text_secondary;
+      color: $theme_on_accent;
       &:hover {
-        color: $theme_text_primary;
+        color: $theme_on_accent;
+        text-decoration: underline;
       }
     }
     .social-links {
       a {
         &:hover {
-          color: $theme_text_primary;
+          color: $theme_on_accent;
         }
       }
     }
@@ -800,15 +945,19 @@ a {
     padding: 10px;
     min-width: 150px;
     h1 {
+      font-family: $font_heading;
       margin: 0;
       padding: 0;
-      color: $theme_text_primary;
+      color: $theme_on_accent;
       font-size: 2.10rem;
-      line-height: 1em;
+      line-height: 1.1em;
+      white-space: nowrap;
     }
     h2 {
-      font-size: 1em;
+      font-family: $font_heading;
+      font-size: 1.05em;
       line-height: 1em;
+      color: $theme_on_accent;
     }
   }
 
@@ -850,6 +999,7 @@ a {
     @include display-flex;
     @include flex-direction(column);
     width: 100%;
+    min-width: 215px;
     a {
       text-transform: uppercase;
     }
@@ -860,7 +1010,7 @@ a {
     padding: 1em 0 1em 5px;
     margin-bottom: 3em;
     font-style: italic;
-    border-bottom: 1px solid $theme_divider;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.25);
   }
 
   .footer-back-to-top {
@@ -926,6 +1076,14 @@ a {
 	.header-content-division {
 		padding-top: 80px;
 	}
+	// The inline header links appear at this width, so the hamburger and its
+	// overlay would be a second, redundant route to the same two pages.
+	.hamburger {
+		display: none;
+	}
+	#site-menu {
+		display: none;
+	}
 	#page-header {
 		nav.header-nav {
 			ul {
@@ -962,12 +1120,7 @@ a {
 	#article {
 		blockquote {
 			margin: 1.5em 0;
-			padding: 1em 1em 1.75em;
-			&::before {
-				display: block;
-				margin-left: -1em;
-				top: 0;
-			}
+			padding-left: 1.25em;
 		}
   }
 

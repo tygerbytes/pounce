@@ -50,15 +50,15 @@
         </ul>
       </section>
 
-      <section class="footer-col footer-back-to-top">
-        <a href="#" class="footer-button">
-          {{ partial "icon" (dict "name" "arrow-up" "class" "icon-lg") }} Back to top
-        </a>
-      </section>
     </nav>
   </div>
   <div class="footer-copyright">
-      <small>{{ .Site.Params.Copyright | safeHTML }}</small>
+      {{- $thisYear := now.Year -}}
+      {{- $start := int (.Site.Params.copyrightStartYear | default $thisYear) -}}
+      <small>
+        &copy;&nbsp;{{ if lt $start $thisYear }}{{ $start }}&ndash;{{ end }}{{ $thisYear }}
+        {{ .Site.Params.Copyright | safeHTML }}
+      </small>
     </div>
 </footer>
 {{- $jsMain := resources.Get "js/main.js" }}

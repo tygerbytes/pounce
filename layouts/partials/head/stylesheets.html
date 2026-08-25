@@ -1,4 +1,9 @@
 
+  {{/*  The heading face is referenced from inside the stylesheet, so the
+        preload scanner would not find it until the CSS had parsed. Every page
+        renders the wordmark in it, so it is always needed. */}}
+  <link rel="preload" href="/fonts/source-serif-4-latin-600.woff2" as="font" type="font/woff2" crossorigin>
+
   <!-- style -->
   {{- $scss_options := (dict "targetPath" "pounce.css" "outputStyle" "compressed" "enableSourceMap" (not hugo.IsProduction) ) -}}
   {{- $styles := resources.Get "scss/all.scss" | css.Sass $scss_options | resources.Fingerprint -}}
