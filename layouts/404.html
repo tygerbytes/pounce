@@ -6,7 +6,7 @@
       <h2>We're sad you're lost.</h2>
       <div class="http-404-directions">
         <a class="lost" href="{{ "/" | relURL }}">
-          <i class='fa fa-directions fa-lg'></i>
+          {{ partial "icon" (dict "name" "directions" "class" "icon-lg") }}
         </a>
       </div>
     </main>

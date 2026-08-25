@@ -9,9 +9,11 @@
       <section class="footer-col footer-contact">
         <h2>Contact</h2>
         <ul>
+          {{- with .Site.Params.contactPhone }}
           <li>
-            <a href="tel:1-{{ .Site.Params.contactphone }}">{{ .Site.Params.contactPhone }}</a>
+            <a href="tel:1-{{ . }}">{{ . }}</a>
           </li>
+          {{- end }}
           <li>
             <a href="mailto:{{ .Site.Params.contactEmail }}">{{ .Site.Params.contactEmail }}</a>
           </li>
@@ -32,7 +34,7 @@
           {{- range .Site.Menus.main }}
           <li>
             <a href="{{ .URL }}" title="{{ .Name }}">
-              <span class="footer-nav-icon">{{ .Pre | safeHTML }}</span>
+              <span class="footer-nav-icon">{{- with .Params.icon }}{{ partial "icon" . }}{{ end -}}</span>
               {{ .Name }}
             </a>
           </li>
@@ -50,7 +52,7 @@
 
       <section class="footer-col footer-back-to-top">
         <a href="#" class="footer-button">
-          <i class="fas fa-arrow-up fa-lg"></i> Back to top
+          {{ partial "icon" (dict "name" "arrow-up" "class" "icon-lg") }} Back to top
         </a>
       </section>
     </nav>

@@ -1,0 +1,27 @@
+{{- /*
+  Renders an inline SVG icon from data/icons.toml.
+
+  Accepts either a bare icon name, or a dict with "name" and an optional
+  "class" (e.g. "icon-lg") for sizing:
+
+    {{ partial "icon" "home" }}
+    {{ partial "icon" (dict "name" "arrow-up" "class" "icon-lg") }}
+
+  Icons are decorative here -- every call site pairs them with visible text or
+  an aria-label -- so they are hidden from assistive tech. The SVG inherits
+  colour via fill="currentColor" and scales with font-size, which is what the
+  old Font Awesome <i> elements did.
+
+  Emits no surrounding whitespace: it is used inline, mid-sentence.
+*/ -}}
+{{- $name := . -}}
+{{- $class := "" -}}
+{{- if reflect.IsMap . -}}
+  {{- $name = .name -}}
+  {{- $class = .class | default "" -}}
+{{- end -}}
+{{- with index hugo.Data.icons $name -}}
+<svg class="icon{{ with $class }} {{ . }}{{ end }}" viewBox="{{ .viewBox }}" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true" focusable="false"><path d="{{ .path }}"/></svg>
+{{- else -}}
+  {{- errorf "partial icon: no icon named %q in data/icons.toml" $name -}}
+{{- end -}}

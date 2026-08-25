@@ -192,6 +192,24 @@ a {
 	}
 }
 
+// Inline SVG icons (partials/icon.html), which replaced Font Awesome.
+// Sized in em against the element's own font-size and filled with
+// currentColor, so the old `font-size` / `color` rules keep working on them
+// exactly as they did on the Font Awesome <i> elements.
+.icon {
+	width: 1em;
+	height: 1em;
+	// Matches the optical baseline Font Awesome's glyphs sat on.
+	vertical-align: -0.125em;
+	fill: currentColor;
+}
+
+// Font Awesome's `fa-lg` was 1.33em. `fa-md` did not exist upstream and had no
+// effect, so plain `.icon` is the equivalent of the old default size.
+.icon-lg {
+	font-size: 1.33em;
+}
+
 .header-content-division {
 	padding-top: 40px;
 }
@@ -459,7 +477,7 @@ a {
 
 	nav {
 		margin: 30px 0;
-		.fa-lg {
+		.icon-lg {
 			font-size: 2.5em;
 		}
   }

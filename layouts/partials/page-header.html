@@ -27,10 +27,10 @@
   <div id="site-menu" class="">
     <div class="site-menu-body">
       <nav class="site-nav">
-        <ul role="menu">
+        <ul>
           {{- range .Site.Menus.main }}
           <li>
-            <a href="{{ .URL }}" title="{{ .Name }}" role="menuitem">
+            <a href="{{ .URL }}" title="{{ .Name }}">
               {{ .Name }}
             </a>
           </li>

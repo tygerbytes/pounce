@@ -5,9 +5,9 @@ name = "pounce"
 license = "MIT"
 licenselink = "https://github.com/tygerbytes/pounce/blob/master/LICENSE"
 description = "Pounce is a Hugo theme for creating a fast and elegant site for personal or business use."
-tags = ["minimal", "blog", "responsive", "clean", "simple", "light", "personal", "flexbox", "business", "fast", "mobile", "font awesome", "company"]
+tags = ["minimal", "blog", "responsive", "clean", "simple", "light", "personal", "flexbox", "business", "fast", "mobile", "company"]
 features = ["blog"]
-min_version = "0.146.0"
+min_version = "0.156.0"
 
 [author]
   name = "Ty Walls"

@@ -3,7 +3,6 @@
   {{- $scss_options := (dict "targetPath" "pounce.css" "outputStyle" "compressed" "enableSourceMap" (not hugo.IsProduction) ) -}}
   {{- $styles := resources.Get "scss/all.scss" | css.Sass $scss_options | resources.Fingerprint -}}
   <link rel="stylesheet" href="{{ $styles.Permalink }}" {{ printf "integrity=%q" $styles.Data.Integrity | safeHTMLAttr }}>
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.9.0/css/all.css" integrity="sha256-UzFD2WYH2U1dQpKDjjZK72VtPeWP50NoJjd26rnAdUI=" crossorigin="anonymous">
 
   <!-- custom css -->
   {{- range .Site.Params.custom_css -}}

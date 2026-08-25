@@ -3,7 +3,21 @@
     <main id="landing">
       <header class="landing-branding">
         <div class="landing-logo">
-          <img src="/img/{{ .Site.Params.Logo }}" alt="{{ .Site.Params.ShortTitle }} logo">
+          {{- /* The logo is the LCP element on this page. Serve it as WebP with
+                 a PNG fallback, carry explicit dimensions so it reserves its
+                 own space, and hint it as high priority so the preload scanner
+                 does not discover it late. Falls back to the plain static path
+                 for sites that keep the logo outside assets/. */ -}}
+          {{- $alt := printf "%s logo" .Site.Params.ShortTitle -}}
+          {{- with resources.Get (printf "img/%s" .Site.Params.Logo) -}}
+          {{- $webp := .Process "webp q90" }}
+          <picture>
+            <source type="image/webp" srcset="{{ $webp.RelPermalink }}" width="{{ $webp.Width }}" height="{{ $webp.Height }}">
+            <img src="{{ .RelPermalink }}" alt="{{ $alt }}" width="{{ .Width }}" height="{{ .Height }}" fetchpriority="high" decoding="async">
+          </picture>
+          {{- else }}
+          <img src="/img/{{ .Site.Params.Logo }}" alt="{{ $alt }}" fetchpriority="high">
+          {{- end }}
         </div>
         <h1 class="landing-title">{{ .Site.Params.ShortTitle }}</h1>
       </header>
