@@ -49,7 +49,7 @@ $hamburger-bar-height: 0.35rem;
 	}
 	-webkit-flex-direction: $value;
 	-ms-flex-direction: $value;
-	-direction: $value;
+	flex-direction: $value;
 }
 
 @mixin flex-wrap($value: nowrap) {
