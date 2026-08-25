@@ -1,9 +1,8 @@
 <!DOCTYPE html>
-<html lang="{{ .Site.LanguageCode }}">
+<html lang="{{ .Site.Language.Locale }}">
 <head>
   {{ hugo.Generator }}
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ delimit (slice .Title "|" .Site.Title) " " }}</title>
   <meta name="description" content="{{ with .Description }}{{ . }}{{ else }}{{ if .IsPage }}{{ .Summary }}{{ else }}{{ with .Site.Params.description }}{{ . }}{{ end }}{{ end }}{{ end }}">
@@ -12,17 +11,15 @@
   {{- partial "head/favicon.html" . -}}
   {{- partial "head/stylesheets.html" . -}}
 
-  {{/* NOTE: See Hugo's internal templates at
+  {{/* Hugo's embedded templates. Since v0.146 these are partials under
+       _partials/ rather than templates under _internal/. See
        https://github.com/gohugoio/hugo/tree/master/tpl/tplimpl/embedded/templates */}}
-  {{- template "_internal/opengraph.html" . -}}
-  {{- template "_internal/google_news.html" . -}}
-  {{- template "_internal/schema.html" . -}}
+  {{- partial "opengraph.html" . -}}
+  {{- partial "schema.html" . -}}
 
   {{- partial "head/twitter_cards.html" . -}}
   {{- partial "head/http-referrer.html" . -}}
   {{- partial "head/google-analytics.html" . -}}
-
-  {{- partial "head/polyfills.html" . -}}
 
   {{- partial "head/custom.html" . -}}
 </head>

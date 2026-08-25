@@ -1,0 +1,8 @@
+{{- /* Replaces Blackfriday's hrefTargetBlank: external links open in a new tab.
+       Internal links are left alone so in-site navigation stays in place. */ -}}
+{{- $u := urls.Parse .Destination -}}
+{{- $external := and $u.Host (ne $u.Host (urls.Parse site.BaseURL).Host) -}}
+<a href="{{ .Destination | safeURL }}"
+   {{- with .Title }} title="{{ . }}"{{ end }}
+   {{- if $external }} target="_blank" rel="noopener"{{ end }}>{{ .Text | safeHTML }}</a>
+{{- /* No trailing newline: this hook renders inline, mid-sentence. */ -}}

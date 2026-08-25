@@ -9,7 +9,7 @@
     {{- $articleClass = "news-article" -}}
   {{- end -}}
   <article id="article" itemscope itemtype="https://schema.org/{{ $articleSchema }}">
-    {{- template "_internal/schema.html" . }}
+    {{- partial "schema.html" . }}
 
     {{ partial "content-header.html" . }}
     <div id="content-body" class="{{ $articleClass }}" itemprop="articleBody">

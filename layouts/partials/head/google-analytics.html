@@ -1,5 +1,6 @@
-{{- if eq (getenv "HUGO_ENV") "development" -}}
-{{ "<!-- No Google Analytics in development -->" | safeHTML }}
+{{- if hugo.IsProduction -}}
+  {{/* Embedded template; emits nothing unless site.Config.Services.GoogleAnalytics.ID is set. */}}
+  {{- partial "google_analytics.html" . -}}
 {{- else -}}
-  {{- template "_internal/google_analytics_async.html" . -}}
+{{ "<!-- No Google Analytics outside production builds -->" | safeHTML }}
 {{- end -}}
