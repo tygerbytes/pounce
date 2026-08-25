@@ -274,7 +274,7 @@ a {
 	width: 100%;
 	max-width: 640px;
 	padding: 0 20px;
-	margin: 1em 0 3.5em;
+	margin: 2.5em 0 3.5em;
 	text-align: left;
 
 	h2 {
@@ -282,17 +282,26 @@ a {
 		font-size: 1.35em;
 		font-weight: 600;
 		line-height: 1.2;
-		margin: 1.6em 0 0.5em;
+		// Generous above so a heading reads as a section break, tight below so
+		// it binds to the paragraph it introduces.
+		margin: 2.6em 0 0.4em;
 		color: $theme_text_primary;
+
+		// This section is a flex child of body, so it establishes a block
+		// formatting context and the first heading's top margin does not
+		// collapse out of it. Left alone it would double the gap under the hero.
+		&:first-child {
+			margin-top: 0;
+		}
 	}
 
 	p {
-		margin: 0 0 0.8em;
+		margin: 0 0 0.9em;
 		color: $theme_text_secondary;
 	}
 
 	ul {
-		margin: 0;
+		margin: 0 0 1.1em;
 		padding: 0;
 		list-style: none;
 
